@@ -82,7 +82,6 @@ RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
     && echo "extension=redis.so" > /etc/php/${PHP_VERSION}/mods-available/redis.ini \
     && echo "extension=memcached.so" > /etc/php/${PHP_VERSION}/mods-available/memcached.ini \
     && echo "extension=imagick.so" > /etc/php/${PHP_VERSION}/mods-available/imagick.ini \
-    && echo "extension=mongodb.so" >> /etc/php/${PHP_VERSION}/fpm/php.ini \
     && ln -sf /etc/php/${PHP_VERSION}/mods-available/redis.ini /etc/php/${PHP_VERSION}/fpm/conf.d/20-redis.ini \
     && ln -sf /etc/php/${PHP_VERSION}/mods-available/redis.ini /etc/php/${PHP_VERSION}/cli/conf.d/20-redis.ini \
     && ln -sf /etc/php/${PHP_VERSION}/mods-available/memcached.ini /etc/php/${PHP_VERSION}/fpm/conf.d/20-memcached.ini \
