@@ -2,7 +2,7 @@
 Docker image containing PHP8-fpm and NGINX as the webserver
 
 **Available at Docker Hub:**   
-https://hub.docker.com/repository/docker/rwslinkman/php8-fpm-nginx
+https://hub.docker.com/r/rwslinkman/php8-fpm-nginx
 
 ## How to use
 This image can be use in multiple ways:
