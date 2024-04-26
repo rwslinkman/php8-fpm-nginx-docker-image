@@ -1,7 +1,7 @@
 FROM debian:buster
 
 # Let the container know that there is no tty
-ENV PHP_VERSION 8.0
+ARG PHP_VERSION
 ENV DEBIAN_FRONTEND noninteractive
 ENV NGINX_VERSION 1.19.6-1~buster
 ENV php_conf /etc/php/$PHP_VERSION/fpm/php.ini
