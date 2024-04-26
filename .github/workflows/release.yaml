@@ -1,0 +1,71 @@
+name: PHP-FMP-NGINX Release pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  image-build:
+    name: "Build project"
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify buildable Docker image
+        run: docker build .
+
+  semantic-release:
+    name: "Semantic release procedure"
+    needs:
+      - image-build
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+    outputs:
+      releasedVersion: ${{steps.release_output.outputs.releasedVersion}}
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+
+      - name: Install dependencies of semantic release
+        run: npm -g install semantic-release @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/exec @semantic-release/git @semantic-release/release-notes-generator @semantic-release/github conventional-changelog-conventionalcommits
+
+      - name: Checkout project code
+        uses: actions/checkout@v4
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npx semantic-release
+
+      - name: Populate release output
+        id: release_output
+        run: |
+          released_version=$(cat release-version.txt)
+          echo "Released version: $released_version"
+          echo "releasedVersion=$released_version" >> $GITHUB_OUTPUT
+
+  publish:
+    name: "Publish released artifacts"
+    runs-on: ubuntu-22.04
+    needs:
+      - semantic-release
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build release Docker image
+        run: docker build -t rwslinkman/php8-fpm-nginx:8.0-${{needs.semantic-release.outputs.releasedVersion}} .
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push released Docker image to Docker Hub
+        run: docker push rwslinkman/php8-fpm-nginx:8.0-${{needs.semantic-release.outputs.releasedVersion}}

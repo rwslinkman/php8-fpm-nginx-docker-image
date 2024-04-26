@@ -1,0 +1,32 @@
+name: PHP-FPM-NGINX Pull Request Checks
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  verify-pr-quality:
+    name: "Verify code quality for pull request"
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify buildable Docker image
+        run: docker build .
+
+  verify-pr-title:
+    name: "Verify PR title for semantic release"
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Verify Pull Request Title
+        run: |
+          if [[ "${{ github.event.pull_request.title }}" =~ ^(api|break|feat|fix|docs|refactor|ci) ]]; then
+            echo "Pull request title complies with semantic release restrictions"
+            exit 0
+          else 
+            echo "Pull request does not match semantic release restrictions"
+            exit 1
+          fi
+
+  # TODO: dry-run semantic release?
