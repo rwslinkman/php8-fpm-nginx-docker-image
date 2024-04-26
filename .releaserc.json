@@ -1,0 +1,44 @@
+{
+  "branches": [
+    "main"
+  ],
+  "tagFormat": "${version}",
+  "plugins": [
+    ["@semantic-release/commit-analyzer", {
+      "preset": "angular",
+      "releaseRules": [
+        { "type": "api", "release": "major" },
+        { "type": "break", "release": "major" },
+        { "type": "feat", "release": "minor" },
+        { "type": "fix", "release": "patch" },
+        { "type": "docs", "release": "patch" },
+        { "type": "refactor", "release": "patch" },
+        { "type": "ci", "release": "patch"},
+        { "scope": "no-release", "release": false }
+      ]
+    }],
+    ["@semantic-release/release-notes-generator", {
+      "preset": "conventionalcommits",
+      "presetConfig": {
+        "types": [
+          { "type": "api", "section": "Breaking changes", "hidden": false },
+          { "type": "break", "section": "Breaking changes", "hidden": false },
+          { "type": "feat", "section": "Features", "hidden": false },
+          { "type": "fix", "section": "Bug fixes", "hidden": false },
+          { "type": "docs", "section": "Documentation", "hidden": false },
+          { "type": "refactor", "section": "Other changes", "hidden": false },
+          { "type": "ci", "section": "Continuous integration", "hidden": false }
+        ]
+      }
+    }],
+    ["@semantic-release/changelog", {
+      "changelogFile": "release-notes.md"
+    }],
+    ["@semantic-release/exec", {
+      "prepareCmd": "echo '${nextRelease.gitTag}' > release-version.txt"
+    }],
+    ["@semantic-release/github", {
+      "failTitle": "Unable to perform semantic release"
+    }]
+  ]
+}

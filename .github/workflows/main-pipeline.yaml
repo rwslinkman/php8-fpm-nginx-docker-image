@@ -1,0 +1,17 @@
+name: PHP-FPM-NGINX Build pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  image-build:
+    name: "Verify project status of main branch"
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify buildable Docker image
+        run: docker build .
