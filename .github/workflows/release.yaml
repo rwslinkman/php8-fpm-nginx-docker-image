@@ -1,4 +1,4 @@
-name: PHP-FMP-NGINX Release pipeline
+name: Release pipeline
 
 on:
   workflow_dispatch:

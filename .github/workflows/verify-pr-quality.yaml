@@ -1,4 +1,4 @@
-name: PHP-FPM-NGINX Pull Request Checks
+name: Pull Request Verification
 
 on:
   pull_request:
