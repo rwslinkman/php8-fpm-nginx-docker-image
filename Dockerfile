@@ -102,10 +102,10 @@ RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
     && rm -rf /var/lib/apt/lists/*
 
 # Supervisor config
-ADD tools/supervisord.conf /etc/supervisord.conf
+ADD tools/${PHP_VERSION}/supervisord.conf /etc/supervisord.conf
 
 # Override nginx's default config
-ADD tools/default.conf /etc/nginx/conf.d/default.conf
+ADD tools/${PHP_VERSION}/default.conf /etc/nginx/conf.d/default.conf
 
 # Override default nginx welcome page
 COPY html /usr/share/nginx/html
