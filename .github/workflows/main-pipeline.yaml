@@ -8,10 +8,13 @@ jobs:
   image-build:
     name: "Verify project status of main branch"
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        phpVersion: [ 8.0, 8.1, 8.2, 8.3 ]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Verify buildable Docker image
-        run: docker build .
+        run: docker build --build-arg="PHP_VERSION=${{ matrix.phpVersion }}" .
