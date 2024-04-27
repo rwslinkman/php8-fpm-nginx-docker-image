@@ -5,8 +5,14 @@ Docker image containing PHP8-fpm and NGINX as the webserver based on `debian:bus
 https://hub.docker.com/r/rwslinkman/php8-fpm-nginx
 
 ```shell
-docker pull rwslinkman/php8-fpm-nginx:1.0.1
+docker pull rwslinkman/php8-fpm-nginx:8.3-1.2.0
 ```
+
+Multiple PHP versions supported:
+- 8.0
+- 8.1
+- 8.2
+- 8.3
 
 ## How to use
 This image can be use in multiple ways:
@@ -17,7 +23,7 @@ This image can be use in multiple ways:
 Create your Docker image based on this Dockerfile configuration.   
 See the `example-image` directory for an example.    
 ```Dockerfile
-FROM rwslinkman/php8-fpm-nginx:1.0.1
+FROM rwslinkman/php8-fpm-nginx:8.3-1.2.0
 
 # Override nginx host config
 ADD example-config/nginx.conf /etc/nginx/conf.d/default.conf
@@ -30,7 +36,7 @@ COPY example-index.php /var/www/myExampleApp/public/index.php
 ### Usage in Gitlab CI
 ```yaml
 php-website-build:
-  image: rwslinkman/php8-fpm-nginx:1.0.1
+  image: rwslinkman/php8-fpm-nginx:8.3-1.2.0
   stage: build
   script:
     - cd whereverMyWebsiteIs
@@ -38,7 +44,7 @@ php-website-build:
 ```
 
 ## List of included packages
-- PHP 8.0
+- PHP 8.x, dependend on chosen version
 - NGINX
 - Composer
 - PHP modules
