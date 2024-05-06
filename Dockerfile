@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV NGINX_VERSION 1.19.6-1~buster
 ENV php_conf /etc/php/$PHP_VERSION/fpm/php.ini
 ENV fpm_conf /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
-ENV COMPOSER_VERSION 2.0.8
+ENV COMPOSER_VERSION 2.7.4
 
 # Install Basic Requirements
 RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
