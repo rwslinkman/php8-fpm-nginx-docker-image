@@ -62,7 +62,8 @@ RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
     && pecl -d php_suffix=${PHP_VERSION} install -o -f redis memcached \
     && mkdir -p /run/php \
     && pip install wheel \
-    && pip install supervisor supervisor-stdout \
+    && pip install supervisor \
+    && pip install git+https://github.com/coderanger/supervisor-stdout \
     && echo "#!/bin/sh\nexit 0" > /usr/sbin/policy-rc.d \
     && rm -rf /etc/nginx/conf.d/default.conf \
     && sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" ${php_conf} \
