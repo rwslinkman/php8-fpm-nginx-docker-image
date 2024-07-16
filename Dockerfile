@@ -1,12 +1,11 @@
-FROM debian:buster
+FROM debian:bullseye
 
 # Let the container know that there is no tty
 ARG PHP_VERSION
 ENV DEBIAN_FRONTEND noninteractive
-ENV NGINX_VERSION 1.19.6-1~buster
 ENV php_conf /etc/php/$PHP_VERSION/fpm/php.ini
 ENV fpm_conf /etc/php/$PHP_VERSION/fpm/pool.d/www.conf
-ENV COMPOSER_VERSION 2.7.4
+ENV COMPOSER_VERSION 2.7.7
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 # Install Basic Requirements
@@ -36,13 +35,13 @@ RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
             nano \
             zip \
             unzip \
-            python-pip \
+            python3-pip \
             python-setuptools \
             git \
             libmemcached-dev \
             libmemcached11 \
             libmagickwand-dev \
-            nginx=${NGINX_VERSION} \
+            nginx \
             php${PHP_VERSION}-fpm \
             php${PHP_VERSION}-cli \
             php${PHP_VERSION}-bcmath \
